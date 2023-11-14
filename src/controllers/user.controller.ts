@@ -1,5 +1,5 @@
 import { FastifyReply, FastifyRequest } from "fastify"
-import { IUserCreateRequest, IUser } from "interfaces"
+import { IUserCreateRequest, IUser, IUserRequest } from "interfaces"
 
 const inMemoryUsers: IUser[] = [
   {
@@ -42,5 +42,13 @@ export const addUser = async (request: IUserCreateRequest, reply: FastifyReply) 
     inMemoryUsers.push(newUser)
   }).then(() => {
     reply.send({ data: inMemoryUsers })
+  })
+}
+
+export const getUserById = async (request: IUserRequest, reply: FastifyReply) => {
+  Promise.resolve(inMemoryUsers)
+  .then((users) => {
+    const user = users.find(user => user.id === Number(request.params.id))
+    reply.send({ data: user })
   })
 }

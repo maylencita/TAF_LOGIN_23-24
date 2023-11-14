@@ -7,6 +7,13 @@ async function userRouter(fastify: FastifyInstance) {
 
   fastify.route({
     method: 'GET',
+    url: '/:id',
+    // schema: loginSchema,
+    handler: controllers.getUserById,
+  })
+  
+  fastify.route({
+    method: 'GET',
     url: '/',
     // schema: loginSchema,
     handler: controllers.listUsers,

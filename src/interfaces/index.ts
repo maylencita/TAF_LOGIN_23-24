@@ -11,3 +11,9 @@ export interface IUserCreateRequest extends FastifyRequest {
     name: string
   }
 }
+
+export interface IUserRequest extends FastifyRequest {
+  params: {
+    id: string
+  }
+}
