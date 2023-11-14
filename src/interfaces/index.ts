@@ -1,7 +1,5 @@
-type User = {
-  id: number,
+export interface IUser {
+  id: number
   name: string
+  score?: number
 }
-
-export { User }
-

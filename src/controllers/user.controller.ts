@@ -1,7 +1,7 @@
 import { FastifyReply, FastifyRequest } from "fastify"
-import { User } from "interfaces"
+import { IUser } from "interfaces"
 
-const staticUsers: User[] = [
+const staticUsers: IUser[] = [
   {
     id: 1,
     name: 'Joyce Byers'
@@ -25,7 +25,6 @@ const staticUsers: User[] = [
 ]
 
 export const listUsers = async (request: FastifyRequest, reply: FastifyReply) => {
-  console.log('listUsers')
   Promise.resolve(staticUsers)
   .then((users) => {
     reply.send({ data: users })
