@@ -1,6 +1,8 @@
 import fastify from 'fastify'
 import userRouter from './routes/user.router'
 
+import 'dotenv/config'
+
 const port = 5000;
 
 const startServer = async () => {

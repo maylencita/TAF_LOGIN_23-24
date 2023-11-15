@@ -1,5 +1,8 @@
 import { FastifyReply, FastifyRequest } from "fastify"
 import { IUserCreateRequest, IUser, IUserRequest } from "interfaces"
+import type * as s from 'zapatos/schema'
+import * as db from 'zapatos/db'
+import pool from '../db/pgPool'
 
 const inMemoryUsers: IUser[] = [
   {
@@ -25,30 +28,23 @@ const inMemoryUsers: IUser[] = [
 ]
 
 export const listUsers = async (request: FastifyRequest, reply: FastifyReply) => {
-  Promise.resolve(inMemoryUsers)
-  .then((users) => {
-    reply.send({ data: users })
-  })
+  return db.sql<s.users.SQL, s.users.Selectable[]>`SELECT * FROM ${"users"}`
+  .run(pool)
+  .then((users) => ({ data: users }))
 }
 
 export const addUser = async (request: IUserCreateRequest, reply: FastifyReply) => {
-  Promise.resolve(inMemoryUsers)
-  .then(() => {
-    const lastId = inMemoryUsers[inMemoryUsers.length - 1].id
-    const newUser = {
-      id: lastId + 1,
-      name: request.body.name      
-    }
-    inMemoryUsers.push(newUser)
-  }).then(() => {
-    reply.send({ data: inMemoryUsers })
-  })
+  return db.sql<s.users.SQL, s.users.Selectable[]>`
+    INSERT INTO ${"users"} (${db.cols(request.body)})
+    VALUES (${db.vals(request.body)}) RETURNING *`
+    .run(pool)
+    .then((users) => reply.send({ data: users }))
 }
 
 export const getUserById = async (request: IUserRequest, reply: FastifyReply) => {
-  Promise.resolve(inMemoryUsers)
-  .then((users) => {
-    const user = users.find(user => user.id === Number(request.params.id))
-    reply.send({ data: user })
-  })
+  const userId = parseInt(request.params.id)
+  return db.sql<s.users.SQL, s.users.Selectable[]>`
+    SELECT * FROM ${"users"} WHERE ${"user_id"} = ${db.param(userId)}`
+    .run(pool)
+    .then((users) => ({ data: users }))
 }
