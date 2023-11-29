@@ -1,6 +1,6 @@
 {
   "db": {
-    "connectionString": "postgres://$PGUSER:$PGPASSWORD@$PGHOST/$PGDATABASE"
+    "connectionString": "{{DATABASE_URL}}"
   },
   "outDir": "./src",
   "schemas": {

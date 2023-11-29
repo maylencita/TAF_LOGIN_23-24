@@ -2,3 +2,4 @@ build/**/*
 node_modules/**
 src/zapatos/schema.d.ts
 src/zapatos/.eslintrc.json
+postgres_data/**

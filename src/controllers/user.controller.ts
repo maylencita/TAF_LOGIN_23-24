@@ -44,7 +44,7 @@ export const addUser = async (request: IUserCreateRequest, reply: FastifyReply) 
 export const getUserById = async (request: IUserRequest, reply: FastifyReply) => {
   const userId = parseInt(request.params.id)
   return db.sql<s.users.SQL, s.users.Selectable[]>`
-    SELECT * FROM ${"users"} WHERE ${"user_id"} = ${db.param(userId)}`
+    SELECT * FROM ${"users"} WHERE ${"id"} = ${db.param(userId)}`
     .run(pool)
     .then((users) => ({ data: users }))
 }

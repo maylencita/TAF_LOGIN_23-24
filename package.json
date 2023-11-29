@@ -21,6 +21,6 @@
     "fluent-json-schema": "^4.2.1",
     "pg": "^8.11.3",
     "ts-node-dev": "^2.0.0",
-    "zapatos": "^6.1.4"
+    "zapatos": "^6.2.0"
   }
 }
